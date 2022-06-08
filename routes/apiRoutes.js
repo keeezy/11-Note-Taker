@@ -3,11 +3,15 @@ const path = require("path")
 const fs = require("fs")
 const uuid = require("../helpers/uuid");
 
+router.get("api/notes", (req, res) => {
+    const notes = fs.readFileSync(path.join(process.cwd(), "/db/db.json"));
+    const parsedNotes = JSON.parse(notes);
+    res.json(parsedNotes);
+})
 
 
 
-
-router.post("/notes", (req, res) => {
+router.post("api/notes", (req, res) => {
     // reads file
     const currentSaves = fs.readFileSync(path.join(process.cwd(), "/db/db.json"));
 
@@ -15,7 +19,7 @@ router.post("/notes", (req, res) => {
     const newSaves = [...currentSaves, { title: req.body.title, text: req.body.text, id: uuid()}];
 
     // writes file
-    fs.writeFileSync(path.join(process.cwd(), "/db/db.json"), newSaves)
+    fs.writeFileSync(path.join(process.cwd(), "/db/db.json"), JSON.stringify(newSaves), res.json(newSaves))
 });
 
 module.exports = router;

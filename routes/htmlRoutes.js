@@ -8,4 +8,4 @@ router.get("/notes", (req, res)=> {
 // will serve the homepage
 // router.get()
 
-module.exports = router
+module.exports = router;
